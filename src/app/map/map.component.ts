@@ -2,8 +2,25 @@ import {
   Component,
   ChangeDetectionStrategy,
   AfterViewInit,
+  Input,
 } from "@angular/core";
 import * as L from "leaflet";
+import { Observable } from "rxjs";
+import { filter, map, mergeMap } from "rxjs/operators";
+import { ParkingLot } from "../interfaces/parkingLot";
+
+const iconUrl = "assets/parkIcon.png";
+const shadowUrl = "assets/marker-shadow.png";
+const iconDefault = L.icon({
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41],
+});
+L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: "app-map",
@@ -12,7 +29,10 @@ import * as L from "leaflet";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements AfterViewInit {
-  private map?: L.Map;
+  private map: L.Map;
+
+  @Input()
+  points: Observable<ParkingLot[]>;
 
   constructor() {}
 
@@ -36,5 +56,18 @@ export class MapComponent implements AfterViewInit {
     );
 
     tiles.addTo(this.map);
+
+    this.points
+      .pipe(
+        mergeMap((item) => item),
+        filter((point) => !!point.location),
+        map((point) =>
+          L.marker([
+            point.location.coordinates[0],
+            point.location.coordinates[1],
+          ])
+        )
+      )
+      .subscribe((marker) => marker.addTo(this.map));
   }
 }
