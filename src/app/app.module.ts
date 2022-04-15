@@ -6,9 +6,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { MapComponent } from "./map/map.component";
+import { ParkinglotDetailsComponent } from "./parkinglot-details/parkinglot-details.component";
 
 @NgModule({
-  declarations: [AppComponent, MapComponent],
+  declarations: [AppComponent, MapComponent, ParkinglotDetailsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -16,6 +17,7 @@ import { MapComponent } from "./map/map.component";
     HttpClientModule,
   ],
   providers: [],
+  entryComponents: [ParkinglotDetailsComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -8,6 +8,8 @@ import * as L from "leaflet";
 import { Observable } from "rxjs";
 import { filter, map, mergeMap } from "rxjs/operators";
 import { ParkingLot } from "../interfaces/parkingLot";
+import { ComponentFactoryResolver, Injector } from "@angular/core";
+import { ParkinglotDetailsComponent } from "../parkinglot-details/parkinglot-details.component";
 
 const iconUrl = "assets/parkIcon.png";
 const shadowUrl = "assets/marker-shadow.png";
@@ -34,7 +36,10 @@ export class MapComponent implements AfterViewInit {
   @Input()
   points: Observable<ParkingLot[]>;
 
-  constructor() {}
+  constructor(
+    private componentResolver: ComponentFactoryResolver,
+    private injector: Injector
+  ) {}
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -60,13 +65,20 @@ export class MapComponent implements AfterViewInit {
     this.points
       .pipe(
         mergeMap((item) => item),
-        filter((point) => !!point.location),
-        map((point) =>
-          L.marker([
-            point.location.coordinates[0],
-            point.location.coordinates[1],
-          ])
-        )
+        filter((parkingLot) => !!parkingLot.location),
+        map((parkingLot) => {
+          const marker = L.marker([
+            parkingLot.location.coordinates[0],
+            parkingLot.location.coordinates[1],
+          ]);
+          const popUpComponent = this.componentResolver
+            .resolveComponentFactory(ParkinglotDetailsComponent)
+            .create(this.injector);
+          popUpComponent.instance.parkingLot = parkingLot;
+          popUpComponent.changeDetectorRef.detectChanges();
+          marker.bindPopup(popUpComponent.location.nativeElement);
+          return marker;
+        })
       )
       .subscribe((marker) => marker.addTo(this.map));
   }
