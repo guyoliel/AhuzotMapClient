@@ -27,12 +27,11 @@ export class MapComponent implements AfterViewInit {
     });
 
     const tiles = L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
       {
-        maxZoom: 18,
+        maxZoom: 20,
         minZoom: 3,
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: ["mt0", "mt1", "mt2", "mt3"],
       }
     );
 
