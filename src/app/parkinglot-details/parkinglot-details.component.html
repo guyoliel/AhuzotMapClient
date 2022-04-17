@@ -1,3 +1,29 @@
 <ng-container *ngIf="parkingLot">
   <div class="parking-title">{{ parkingLot.name }}</div>
+  <div class="parking-details">
+    <div>
+      <span class="detail-title">סטטוס: </span>
+      <span
+        ><app-parkinglot-status
+          [status]="parkingLot.status"
+        ></app-parkinglot-status
+      ></span>
+    </div>
+    <div>
+      <span class="detail-title">עודכן לאחרונה ב: </span>
+      <span>{{ parkingLot.lastUpdateTime }}</span>
+    </div>
+  </div>
+  <div class="parking-actions">
+    <a
+      mat-flat-button
+      color="primary"
+      class="action"
+      href="{{ parkingLot.url }}"
+      >אתר החניון<mat-icon>language</mat-icon></a
+    >
+    <button mat-flat-button class="action btn-navigate">
+      נווט לחניון <mat-icon svgIcon="waze"></mat-icon>
+    </button>
+  </div>
 </ng-container>

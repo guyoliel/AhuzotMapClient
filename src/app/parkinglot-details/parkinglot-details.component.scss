@@ -1,4 +1,33 @@
 .parking-title {
+  display: flex;
+  justify-content: center;
   font-size: 1.2em;
   font-weight: 600;
+}
+
+.parking-details {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .detail-title {
+    font-weight: 600;
+  }
+}
+
+.parking-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3%;
+  width: 100%;
+
+  .action {
+    border-radius: 0.8em;
+    width: 48%;
+
+    &.btn-navigate {
+      background-color: #31cdfe;
+    }
+  }
 }
