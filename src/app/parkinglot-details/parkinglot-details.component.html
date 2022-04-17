@@ -22,8 +22,14 @@
       href="{{ parkingLot.url }}"
       >אתר החניון<mat-icon>language</mat-icon></a
     >
-    <button mat-flat-button class="action btn-navigate">
+    <a
+      mat-flat-button
+      class="action btn-navigate"
+      href="https://waze.com/ul?ll={{ parkingLot.location.coordinates[0] }}%2C{{
+        parkingLot.location.coordinates[1]
+      }}&navigate=yes"
+    >
       נווט לחניון <mat-icon svgIcon="waze"></mat-icon>
-    </button>
+    </a>
   </div>
 </ng-container>
