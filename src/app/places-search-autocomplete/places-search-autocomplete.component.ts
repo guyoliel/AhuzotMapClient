@@ -1,7 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { Observable } from "rxjs";
-import { map, startWith } from "rxjs/operators";
+import { EMPTY, Observable } from "rxjs";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+} from "rxjs/operators";
+import { Place } from "../interfaces/places";
+import { PlacesService } from "../services/places.service";
 
 @Component({
   selector: "app-places-search-autocomplete",
@@ -9,22 +17,23 @@ import { map, startWith } from "rxjs/operators";
   styleUrls: ["./places-search-autocomplete.component.scss"],
 })
 export class PlacesSearchAutocompleteComponent implements OnInit {
-  options: string[] = ["1", "2", "3"];
-  filteredOptions: Observable<string[]>;
+  filteredOptions: Observable<Place[]>;
   placeControl = new FormControl("");
-  constructor() {}
+  constructor(private placesService: PlacesService) {}
 
   ngOnInit(): void {
     this.filteredOptions = this.placeControl.valueChanges.pipe(
       startWith(""),
-      map((value) => this._filter(value))
+      debounceTime(200),
+      distinctUntilChanged(),
+      map((value) => (typeof value === "string" ? value : value.display_name)),
+      switchMap((value) =>
+        value ? this.placesService.getPlaces(value) : EMPTY
+      )
     );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
+  getDisplayOption(value: Place): string {
+    return value.display_name;
   }
 }

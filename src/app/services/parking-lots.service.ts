@@ -12,7 +12,7 @@ export class ParkingLotsService {
 
   getAllParkingLots(): Observable<ParkingLot[]> {
     return this.http.get<ParkingLot[]>(
-      `${environment.mapServerApiUrl}/get_all_lots`
+      `${environment.mapServerApiUrl}/parking_lots/get_all_lots`
     );
   }
 }

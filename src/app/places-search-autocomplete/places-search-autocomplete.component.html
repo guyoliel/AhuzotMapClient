@@ -1,6 +1,6 @@
-<mat-autocomplete #auto="matAutocomplete">
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="getDisplayOption">
   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-    {{ option }}
+    {{ option.display_name }}
   </mat-option>
 </mat-autocomplete>
 <div class="search-container">
