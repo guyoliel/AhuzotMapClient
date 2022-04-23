@@ -1,0 +1,21 @@
+{
+	"tabWidth": 4,
+	"useTabs": true,
+	"htmlWhitespaceSensitivity": "ignore",
+	"jsxBracketSameLine": true,
+	"printWidth": 128,
+	"overrides": [
+		{
+			"files": "*.html",
+			"options": {
+				"parser": "html"
+			}
+		},
+		{
+			"files": "*.component.html",
+			"options": {
+				"parser": "angular"
+			}
+		}
+	]
+}

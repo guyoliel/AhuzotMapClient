@@ -16,27 +16,27 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDividerModule } from "@angular/material/divider";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MapComponent,
-    ParkinglotDetailsComponent,
-    ParkinglotStatusComponent,
-    PlacesSearchAutocompleteComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatIconModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatDividerModule,
-  ],
-  providers: [],
-  entryComponents: [ParkinglotDetailsComponent],
-  bootstrap: [AppComponent],
+	declarations: [
+		AppComponent,
+		MapComponent,
+		ParkinglotDetailsComponent,
+		ParkinglotStatusComponent,
+		PlacesSearchAutocompleteComponent,
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		HttpClientModule,
+		MatButtonModule,
+		MatIconModule,
+		MatAutocompleteModule,
+		ReactiveFormsModule,
+		MatInputModule,
+		MatDividerModule,
+	],
+	providers: [],
+	entryComponents: [ParkinglotDetailsComponent],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

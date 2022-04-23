@@ -1,3 +1,3 @@
 export interface Place {
-  displayName: string;
+	displayName: string;
 }

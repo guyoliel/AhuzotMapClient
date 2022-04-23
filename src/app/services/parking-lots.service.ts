@@ -5,14 +5,12 @@ import { ParkingLot } from "../interfaces/parkingLot";
 import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: "root",
+	providedIn: "root",
 })
 export class ParkingLotsService {
-  constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-  getAllParkingLots(): Observable<ParkingLot[]> {
-    return this.http.get<ParkingLot[]>(
-      `${environment.mapServerApiUrl}/parking_lots/get_all_lots`
-    );
-  }
+	getAllParkingLots(): Observable<ParkingLot[]> {
+		return this.http.get<ParkingLot[]>(`${environment.mapServerApiUrl}/parking_lots/get_all_lots`);
+	}
 }
