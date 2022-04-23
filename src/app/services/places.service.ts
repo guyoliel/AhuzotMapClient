@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { tap, map, mergeMap, catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Place } from "../interfaces/places";
@@ -11,9 +11,17 @@ import { Place } from "../interfaces/places";
 export class PlacesService {
   constructor(private http: HttpClient) {}
 
-  getPlaces(value: string) {
-    return this.http.get<Place[]>(
-      `${environment.mapServerApiUrl}/places/search_places?query=${value}`
-    );
+  getPlaces(value: string): Observable<Place[]> {
+    return this.http
+      .get<any[]>(
+        `${environment.mapServerApiUrl}/places/search_places?query=${value}`
+      )
+      .pipe(
+        map((places) => {
+          return places.map<Place>((item) => ({
+            displayName: item.display_name,
+          }));
+        })
+      );
   }
 }

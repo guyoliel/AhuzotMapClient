@@ -24,7 +24,7 @@ export class PlacesSearchAutocompleteComponent implements OnInit {
   ngOnInit(): void {
     this.filteredOptions = this.placeControl.valueChanges.pipe(
       startWith(""),
-      debounceTime(200),
+      debounceTime(400),
       distinctUntilChanged(),
       map((value) => (typeof value === "string" ? value : value.display_name)),
       switchMap((value) =>
@@ -34,6 +34,6 @@ export class PlacesSearchAutocompleteComponent implements OnInit {
   }
 
   getDisplayOption(value: Place): string {
-    return value.display_name;
+    return value.displayName;
   }
 }
