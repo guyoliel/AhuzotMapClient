@@ -29,7 +29,7 @@ export class MapComponent implements AfterViewInit {
 	private map: L.Map;
 
 	@Input()
-	points: Observable<ParkingLot[]>;
+	parkingLots: ParkingLot[];
 
 	constructor(private componentResolver: ComponentFactoryResolver, private injector: Injector) {}
 
@@ -51,21 +51,18 @@ export class MapComponent implements AfterViewInit {
 
 		tiles.addTo(this.map);
 
-		this.points
-			.pipe(
-				mergeMap((item) => item),
-				filter((parkingLot) => !!parkingLot.location),
-				map((parkingLot) => {
-					const marker = L.marker([parkingLot.location.coordinates[0], parkingLot.location.coordinates[1]]);
-					const popUpComponent = this.componentResolver
-						.resolveComponentFactory(ParkinglotDetailsComponent)
-						.create(this.injector);
-					popUpComponent.instance.parkingLot = parkingLot;
-					popUpComponent.changeDetectorRef.detectChanges();
-					marker.bindPopup(popUpComponent.location.nativeElement);
-					return marker;
-				})
-			)
-			.subscribe((marker) => marker.addTo(this.map));
+		const markers = this.parkingLots
+			.filter((parkingLot) => !!parkingLot.location)
+			.map((parkingLot) => {
+				const marker = L.marker([parkingLot.location.coordinates[0], parkingLot.location.coordinates[1]]);
+				const popUpComponent = this.componentResolver
+					.resolveComponentFactory(ParkinglotDetailsComponent)
+					.create(this.injector);
+				popUpComponent.instance.parkingLot = parkingLot;
+				popUpComponent.changeDetectorRef.detectChanges();
+				marker.bindPopup(popUpComponent.location.nativeElement);
+				return marker;
+			});
+		markers.forEach((marker) => marker.addTo(this.map));
 	}
 }

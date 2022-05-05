@@ -1,2 +1,4 @@
 <app-places-search-autocomplete class="places-autocomplete"></app-places-search-autocomplete>
-<app-map [points]="parkingLots$"></app-map>
+<ng-container *ngIf="parkingLots$ | async as parkingLots">
+	<app-map [parkingLots]="parkingLots"></app-map>
+</ng-container>
