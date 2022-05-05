@@ -4,6 +4,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { Observable } from "rxjs";
 import { ParkingLot } from "./interfaces/parkingLot";
 import { ParkingLotsService } from "./services/parking-lots.service";
+import { Place } from "./interfaces/place";
 
 @Component({
 	selector: "app-root",
@@ -12,6 +13,7 @@ import { ParkingLotsService } from "./services/parking-lots.service";
 })
 export class AppComponent implements OnInit {
 	parkingLots$: Observable<ParkingLot[]>;
+	selectedPlace: Place;
 
 	constructor(
 		private parkingLotsService: ParkingLotsService,
@@ -23,5 +25,9 @@ export class AppComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.parkingLots$ = this.parkingLotsService.getAllParkingLots();
+	}
+
+	selectPlace(place: Place): void {
+		this.selectedPlace = place;
 	}
 }

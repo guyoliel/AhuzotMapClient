@@ -7,10 +7,10 @@
 	<mat-form-field class="search-input" appearance="outline">
 		<mat-label>Search Google Maps</mat-label>
 		<input matInput type="text" [formControl]="placeControl" [matAutocomplete]="auto" />
-		<button *ngIf="placeControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="placeControl.setValue('')">
+		<button *ngIf="placeControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
 			<mat-icon>close</mat-icon>
 		</button>
-		<button class="search-button" matSuffix mat-icon-button aria-label="Search">
+		<button class="search-button" matSuffix mat-icon-button aria-label="Search" (click)="selectPlace()">
 			<mat-icon>search</mat-icon>
 		</button>
 	</mat-form-field>

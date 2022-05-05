@@ -1,4 +1,7 @@
-<app-places-search-autocomplete class="places-autocomplete"></app-places-search-autocomplete>
+<app-places-search-autocomplete
+	class="places-autocomplete"
+	(placeSelected)="selectPlace($event)"
+></app-places-search-autocomplete>
 <ng-container *ngIf="parkingLots$ | async as parkingLots">
-	<app-map [parkingLots]="parkingLots"></app-map>
+	<app-map [parkingLots]="parkingLots" [selectedPlace]="selectedPlace"></app-map>
 </ng-container>

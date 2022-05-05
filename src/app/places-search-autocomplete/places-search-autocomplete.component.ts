@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { EMPTY, Observable } from "rxjs";
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from "rxjs/operators";
-import { Place } from "../interfaces/places";
+import { Place } from "../interfaces/place";
 import { PlacesService } from "../services/places.service";
 
 @Component({
@@ -13,6 +13,9 @@ import { PlacesService } from "../services/places.service";
 export class PlacesSearchAutocompleteComponent implements OnInit {
 	filteredOptions: Observable<Place[]>;
 	placeControl = new FormControl("");
+
+	@Output() placeSelected: EventEmitter<Place> = new EventEmitter();
+
 	constructor(private placesService: PlacesService) {}
 
 	ngOnInit(): void {
@@ -27,5 +30,13 @@ export class PlacesSearchAutocompleteComponent implements OnInit {
 
 	getDisplayOption(value: Place): string {
 		return value.displayName;
+	}
+
+	clearSearch(): void {
+		this.placeControl.setValue("");
+	}
+
+	selectPlace(): void {
+		this.placeSelected.emit(this.placeControl.value);
 	}
 }
